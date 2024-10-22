@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "project-a"
+version = "0.1.0"
+description = ""
+authors = ["sha1n <sha1n@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    { include = "module_a", from = "modules/module-a/src" },
+    { include = "module_b", from = "modules/module-b/src" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+module-a = { path = "./modules/module-a", develop = true }
+module-b = { path = "./modules/module-b", develop = true }
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8,<9"
+pytest-asyncio = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
