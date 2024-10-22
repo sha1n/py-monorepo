@@ -1,15 +1,21 @@
 REPO_PATH 		:= $(shell git rev-parse --show-toplevel)
 PYTHON_VERSION 	:= "3.12"
 
-define run_on_all_modules
-	@for module in $(shell ls modules); do \
-		if [ -d "modules/$$module" ]; then \
-			echo "Running command on modules/$$module..."; \
-			$(1) $(REPO_PATH)/modules/$$module; \
+define run_in_all_projects
+	@for project in $(shell ls projects); do \
+		if [ -d "projects/$$project" ]; then \
+			echo "Running '$(1)' on projects/$$project..."; \
+			cd $(REPO_PATH)/projects/$$project && $(1) ; cd $(REPO_PATH); \
 		fi \
 	done
 endef
 
+
+.PHONY: lock
+lock: .env
+	@echo "Locking..."
+	@poetry lock --no-update
+	$(call run_in_all_projects,poetry lock --no-update)
 
 .PHONY: install
 install: .env
@@ -19,7 +25,7 @@ install: .env
 .PHONY: test
 test: install
 	@echo "Running tests..."
-	@poetry run pytest
+	$(call run_in_all_projects,poetry install && poetry run pytest)
 
 .PHONY: format
 format: install
@@ -37,12 +43,14 @@ fix-lint: format
 .PHONY: build
 build: install
 	@echo "Building packages..."
-	@poetry build
+	$(call run_in_all_projects,poetry build)
 
 .PHONY: clean
 clean:
 	@echo "Cleaning up..."
 	@poetry env remove --all
+	$(call run_in_all_projects,poetry env remove --all)
+	$(call run_in_all_projects,rm -rf dist/ .pytest_cache .coverage coverage.xml .ruff_cache .pytest_cache)
 	@rm -rf dist/ .pytest_cache .coverage coverage.xml .ruff_cache .pytest_cache
 
 .PHONY: .poetry-check

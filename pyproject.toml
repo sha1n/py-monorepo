@@ -5,15 +5,12 @@ description = ""
 authors = ["sha1n <sha1n@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [
-    { include = "module_a", from = "modules/module-a/src" },
-    { include = "module_b", from = "modules/module-b/src" },
-]
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.12"
-module-a = { path = "./modules/module-a", develop = true }
-module-b = { path = "./modules/module-b", develop = true }
+project-a = { path = "./projects/project-a", develop = true }
+project-b = { path = "./projects/project-b", develop = true }
 pytest = "^8.3.3"
 
 [tool.poetry.group.dev.dependencies]
@@ -23,7 +20,6 @@ ruff = "^0.7.0"
 black = "^24.10.0"
 
 [tool.pytest.ini_options]
-minversion = "6.0"
 addopts = "--strict-markers"
 asyncio_default_fixture_loop_scope = "function"
 asyncio_mode = "auto"
