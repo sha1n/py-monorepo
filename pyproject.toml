@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "monorepo"
+version = "0.1.0"
+description = ""
+authors = ["sha1n <sha1n@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+#package-mode = false
+packages = [
+    { include = "monorepo", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+module-a = { path = "./modules/module-a", develop = true }
+module-b = { path = "./modules/module-b", develop = true }
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
+pytest-asyncio = "^0.24.0"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "--strict-markers"
+asyncio_default_fixture_loop_scope = "function"
+asyncio_mode = "auto"
+pythonpath = [
+    "src",
+]
+testpaths = [
+    "tests",
+]
+markers = [
+    "unit: unit tests",
+    "integration: integration tests",
+]
+
+[tool.poetry.scripts]
+test-all = "monorepo.test:run_all_tests"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
