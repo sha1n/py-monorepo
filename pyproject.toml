@@ -5,8 +5,7 @@ description = ""
 authors = ["sha1n <sha1n@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
-#package-mode = false
-packages = [
+packages = [ # TODO: remove once shared monorepo dev module exists
     { include = "monorepo", from = "src" },
 ]
 
@@ -36,7 +35,7 @@ markers = [
 ]
 
 [tool.poetry.scripts]
-test-all = "monorepo.test:run_all_tests"
+test-all = "monorepo.test:run_all_tests" # TODO: replace with shared monorepo module
 
 
 [build-system]
