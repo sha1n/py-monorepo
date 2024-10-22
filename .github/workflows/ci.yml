@@ -36,6 +36,10 @@ jobs:
         curl -sSL https://install.python-poetry.org | python -
         make install
 
+    - name: Lint
+      run: |
+        make lint
+
     - name: Test
       run: |
         make test
