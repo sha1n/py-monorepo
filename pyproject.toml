@@ -5,39 +5,53 @@ description = ""
 authors = ["sha1n <sha1n@users.noreply.github.com>"]
 license = "MIT"
 readme = "README.md"
-packages = [ # TODO: remove once shared monorepo dev module exists
-    { include = "monorepo", from = "src" },
+packages = [
+    { include = "module_a", from = "modules/module-a/src" },
+    { include = "module_b", from = "modules/module-b/src" },
 ]
 
 [tool.poetry.dependencies]
 python = "^3.12"
 module-a = { path = "./modules/module-a", develop = true }
 module-b = { path = "./modules/module-b", develop = true }
+pytest = "^8.3.3"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
 pytest-asyncio = "^0.24.0"
+ruff = "^0.7.0"
+black = "^24.10.0"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "--strict-markers"
 asyncio_default_fixture_loop_scope = "function"
 asyncio_mode = "auto"
-pythonpath = [
-    "src",
-]
-testpaths = [
-    "tests",
-]
 markers = [
     "unit: unit tests",
     "integration: integration tests",
 ]
 
-[tool.poetry.scripts]
-test-all = "monorepo.test:run_all_tests" # TODO: replace with shared monorepo module
-
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 120
+
+[tool.ruff]
+lint.select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "C", # flake8-comprehensions
+    "B", # flake8-bugbear
+    "PL" # pylint
+]
+lint.ignore = [
+    "E501", # line too long, handled by black
+    "PLR2004", # Magic value used in comparison
+    "B008", # do not perform function calls in argument defaults
+    "W291", # trailing whitespace
+]

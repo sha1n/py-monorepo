@@ -1,4 +1,3 @@
-
 class ServiceA:
     def __init__(self):
         pass
