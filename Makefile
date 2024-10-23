@@ -5,7 +5,7 @@ define run_in_all_projects
 	@for project in $(shell ls projects); do \
 		if [ -d "projects/$$project" ]; then \
 			echo "Running '$(1)' on projects/$$project..."; \
-			cd $(REPO_PATH)/projects/$$project && $(1) ; cd $(REPO_PATH); \
+			cd $(REPO_PATH)/projects/$$project && $(1) && cd $(REPO_PATH); \
 		fi \
 	done
 endef
@@ -25,7 +25,7 @@ install: .env
 .PHONY: test
 test: install
 	@echo "Running tests..."
-	$(call run_in_all_projects,poetry install && poetry run pytest)
+	$(call run_in_all_projects,poetry install && poetry run pytest || exit 1)
 
 .PHONY: format
 format: install
@@ -33,7 +33,7 @@ format: install
 	@poetry run black --safe .
 
 .PHONY: lint
-lint: .ruff .black_check .poetry-check
+lint: install .ruff .black_check .poetry-check
 
 .PHONY: fix-lint
 fix-lint: format
