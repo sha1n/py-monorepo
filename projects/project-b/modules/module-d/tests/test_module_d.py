@@ -11,8 +11,8 @@ def test_module_d():
 
 def test_project_a_modules_are_not_accessible():
     try:
-        import module_a  # noqa: F401
-        import module_b  # noqa: F401
+        import module_a  # noqa: F401 PLC0415
+        import module_b  # noqa: F401 PLC0415
 
         raise AssertionError("Project A modules are accessible")
     except ImportError:
