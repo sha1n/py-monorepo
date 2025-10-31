@@ -1,20 +1,26 @@
-[tool.poetry]
+[project]
 name = "monorepo"
 version = "0.1.0"
 description = ""
-authors = ["sha1n <sha1n@users.noreply.github.com>"]
+authors = [
+    {name = "sha1n", email = "sha1n@users.noreply.github.com"}
+]
 license = "MIT"
 readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pytest>=8.3.3,<9",
+]
+
+[tool.poetry]
 packages = [
     { include = "module_a", from = "modules/module-a/src" },
     { include = "module_b", from = "modules/module-b/src" },
 ]
 
 [tool.poetry.dependencies]
-python = "^3.12"
 module-a = { path = "./modules/module-a", develop = true }
 module-b = { path = "./modules/module-b", develop = true }
-pytest = "^8.3.3"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
