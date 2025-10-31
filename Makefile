@@ -1,5 +1,5 @@
-REPO_PATH 		:= $(shell git rev-parse --show-toplevel)
-PYTHON_VERSION 	:= "3.12"
+REPO_PATH		:= $(shell git rev-parse --show-toplevel)
+PYTHON_VERSION 	:= "3.13"
 
 define run_on_all_modules
 	@for module in $(shell ls modules); do \
@@ -13,8 +13,8 @@ endef
 
 .PHONY: install
 install: .env
-	@echo "Installing..."
-	@poetry install --sync
+	@echo "Syncing..."
+	@poetry sync
 
 .PHONY: test
 test: install
