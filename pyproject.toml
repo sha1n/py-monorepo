@@ -26,7 +26,7 @@ module-b = { path = "./modules/module-b", develop = true }
 pytest = "^8.3.3"
 pytest-asyncio = "^0.24.0"
 ruff = "^0.7.0"
-black = "^24.10.0"
+black = "^26.3.1"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
